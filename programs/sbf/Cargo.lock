@@ -6219,14 +6219,8 @@ version = "4.1.0-alpha.0"
 dependencies = [
  "agave-feature-set",
  "ahash 0.8.12",
- "log",
- "solana-bpf-loader-program",
- "solana-compute-budget-program",
- "solana-loader-v4-program",
  "solana-pubkey 4.1.0",
  "solana-sdk-ids",
- "solana-system-program",
- "solana-vote-program",
 ]
 
 [[package]]
@@ -7446,7 +7440,6 @@ checksum = "ae8dd4c280dca9d046139eb5b7a5ac9ad10403fbd64964c7d7571214950d758f"
 name = "solana-net-utils"
 version = "4.1.0-alpha.0"
 dependencies = [
- "anyhow",
  "bincode",
  "bytes",
  "cfg-if 1.0.4",
@@ -7459,6 +7452,7 @@ dependencies = [
  "socket2 0.6.3",
  "solana-serde",
  "solana-svm-type-overrides",
+ "thiserror 2.0.18",
  "tokio",
  "url 2.5.8",
 ]
@@ -8556,18 +8550,6 @@ dependencies = [
  "solana-program-entrypoint",
  "solana-program-error",
  "solana-pubkey 4.1.0",
-]
-
-[[package]]
-name = "solana-sbf-rust-get-minimum-delegation"
-version = "4.1.0-alpha.0"
-dependencies = [
- "solana-account-info",
- "solana-msg",
- "solana-program-entrypoint",
- "solana-program-error",
- "solana-pubkey 4.1.0",
- "solana-stake-interface",
 ]
 
 [[package]]
@@ -11577,9 +11559,9 @@ checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
 
 [[package]]
 name = "wincode"
-version = "0.4.5"
+version = "0.4.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e9a7bf870d59e16860de785358c89e75cffd171c04fb5f93fba029a167cb0263"
+checksum = "dc91ddd8c932a38bbec58ed536d9e93ce9cd01b6af9b6de3c501132cf98ddec6"
 dependencies = [
  "pastey",
  "proc-macro2",

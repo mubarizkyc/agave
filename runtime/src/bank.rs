@@ -5167,6 +5167,14 @@ impl Bank {
         self.ticks_per_slot
     }
 
+    /// Return the target number of ticks per second for this bank.
+    pub fn ticks_per_second(&self) -> u64 {
+        let ticks_per_slot = u128::from(self.ticks_per_slot.max(1));
+        let ns_per_tick = self.ns_per_slot.saturating_div(ticks_per_slot).max(1);
+        u64::try_from(1_000_000_000u128.saturating_div(ns_per_tick))
+            .expect("ticks per second must fit in u64")
+    }
+
     /// Return the number of slots per year
     pub fn slots_per_year(&self) -> f64 {
         self.slots_per_year
@@ -5669,6 +5677,7 @@ impl Bank {
                 error!("Failed to upgrade Core BPF Stake program: {e}");
             }
         }
+
         if new_feature_activations.contains(&feature_set::replace_spl_token_with_p_token::id()) {
             if let Err(e) = self.upgrade_loader_v2_program_with_loader_v3_program(
                 &feature_set::replace_spl_token_with_p_token::SPL_TOKEN_PROGRAM_ID,
@@ -5681,6 +5690,16 @@ impl Bank {
                     "Failed to replace SPL Token with p-token buffer '{}': {e}",
                     feature_set::replace_spl_token_with_p_token::PTOKEN_PROGRAM_BUFFER,
                 );
+            }
+        }
+
+        if new_feature_activations.contains(&feature_set::upgrade_bpf_stake_program_to_v5::id()) {
+            if let Err(e) = self.upgrade_core_bpf_program(
+                &solana_sdk_ids::stake::id(),
+                &feature_set::upgrade_bpf_stake_program_to_v5::buffer::id(),
+                "upgrade_stake_program_to_v5",
+            ) {
+                error!("Failed to upgrade Core BPF Stake program: {e}");
             }
         }
     }
